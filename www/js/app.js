@@ -44,12 +44,23 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
+	__webpack_require__(1);
+
+
+/***/ },
+/* 1 */
+/***/ function(module, exports, __webpack_require__) {
+
 	var
-		_routing = __webpack_require__(1);
+	    _routing = __webpack_require__(2),
+	    _templates = {
+	        app: __webpack_require__(3)
+	    };
 
+	__webpack_require__(4);
 
-	angular.module('app', ['base'])
-		.config(_routing)
+	angular.module('app', ['base', 'dash'])
+	    .config(_routing)
 	    .config(['localStorageServiceProvider', function(localStorageServiceProvider) {
 	        localStorageServiceProvider
 	            .setPrefix('app')
@@ -57,7 +68,7 @@
 	            .setNotify(true, true)
 	    }])
 	    .run(['$templateCache', function($templateCache) {
-	        //$templateCache.put('', );
+	        $templateCache.put('app.tpl', _templates.app);
 	    }])
 	    .run(['$ionicPlatform', function($ionicPlatform) {
 	        $ionicPlatform.ready(function() {
@@ -67,32 +78,68 @@
 	            if (window.StatusBar) {
 	                StatusBar.styleDefault();
 	            }
-	        });
-	    }])
-	__webpack_require__(2)
-
-/***/ },
-/* 1 */
-/***/ function(module, exports) {
-
-	module.exports = ['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
-
-	    $urlRouterProvider.otherwise("/app");
-
-	    $stateProvider
-	        .state('app', {
-	            url: "/app",
-
 	        })
+	    }])
 
-	}]
+	angular.element(document).ready(function() {
+	    angular.bootstrap(document, ['app']);
+	});
 
 
 /***/ },
 /* 2 */
 /***/ function(module, exports) {
 
-	// removed by extract-text-webpack-plugin
+	module.exports = ['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
+
+	    $urlRouterProvider.otherwise("/app/dash");
+
+	    $stateProvider
+	        .state('app', {
+	            url: "/app",
+	            abstruct: true,
+	            templateUrl: 'app.tpl'
+	        })
+	        .state('app.dash', {
+	            url: "/dash",
+	            templateUrl: 'dash.tpl'
+	        })
+
+	}]
+
+
+/***/ },
+/* 3 */
+/***/ function(module, exports) {
+
+	module.exports = "<ion-nav-bar class=\"bar-positive\">\r\n    <ion-nav-back-button class=\"button-clear\">\r\n        <i class=\"ion-arrow-left-c\"></i> Back\r\n    </ion-nav-back-button>\r\n</ion-nav-bar>\r\n<ion-nav-view></ion-nav-view>\r\n<ion-footer-bar align-title=\"left\" class=\"bar-positive\">\r\n</ion-footer-bar>\r\n";
+
+/***/ },
+/* 4 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(5);
+
+/***/ },
+/* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var
+	    _templates = {
+	        dash: __webpack_require__(6)
+	    };
+
+	angular.module('dash', [])
+	    .run(['$templateCache', function($templateCache) {
+	        $templateCache.put('dash.tpl', _templates.dash);
+	    }])
+
+
+/***/ },
+/* 6 */
+/***/ function(module, exports) {
+
+	module.exports = "<ion-view>\r\n    <ion-content>\r\n    \t\r\n    </ion-content>\r\n</ion-view>\r\n";
 
 /***/ }
 /******/ ]);

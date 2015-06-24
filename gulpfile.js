@@ -35,11 +35,14 @@ gulp.task("webpack", function(callback) {
         },
         module: {
             loaders: [{
+                test: /\.html$/,
+                loader: "html?attrs=img:data-src"
+            }, {
                 test: /\.css$/,
                 loader: ExtractTextPlugin.extract("style-loader", "css-loader")
             }, {
                 test: /\.png$/,
-                loader: "url?limit=200000000000&name=../img/[hash].[ext]"
+                loader: "url?limit=10000&name=../img/[hash].[ext]"
             }]
         },
         plugins: [
